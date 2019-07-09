@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="MycontextId" targetRuntime="MyBatis3">
+		<plugin	type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+
+		<plugin type="com.irish.RenameSqlMapperPlugin">
+			<property name="searchString" value="Mapper" />
+			<property name="replaceString" value="Dao" />
+		</plugin>
+
+		<plugin type="com.irish.RenameJavaMapperPlugin">
+			<property name="searchString" value="Mapper$" />
+			<property name="replaceString" value="Dao" />
+		</plugin>
+
+		<commentGenerator type="com.irish.CommentGenerator">
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/test" userId="root"
+			password="root">
+		</jdbcConnection>
+
+		<!-- 生成model 文件 -->
+		<javaModelGenerator targetPackage="com.irish.model"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成xm映射文件 -->
+		<sqlMapGenerator targetPackage="com.irish.dao"
+			targetProject="./src/main/resources/mapper">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 生成Dao 接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.irish.dao" targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="t_member" domainObjectName="Member"
+			enableDeleteByExample="false" enableUpdateByExample="false"
+			enableCountByExample="false">
+			<!-- 需要插入时返回主键值，请将此属性打开，column值为主键的列明 -->
+			<generatedKey column="id" sqlStatement="MySql" identity="true" />
+		</table>
+	</context>
+</generatorConfiguration>
